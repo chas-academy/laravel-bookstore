@@ -20,8 +20,10 @@ Route::get('/', function () {
 // });
 
 Route::get('/hello', 'Hello@index');
-
 Route::get('/hello/{name}', 'Hello@show');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('books','BookController');
