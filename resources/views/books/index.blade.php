@@ -25,7 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($books as $book)
+      @forelse($books as $book)
       <tr>
         <td>{{$book['id']}}</td>
         <td>{{$book['title']}}</td>
@@ -41,7 +41,11 @@
           </form>
         </td>
       </tr>
-      @endforeach
+      @empty
+        <tr>
+          <td colspan="7">No books :(</td>
+        </tr>
+      @endforelse
     </tbody>
   </table>
   </div>

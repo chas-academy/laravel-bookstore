@@ -105,6 +105,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::find($id);
+        $book->delete();
+        return redirect('books')->with('success','Book has been deleted');
     }
 }
