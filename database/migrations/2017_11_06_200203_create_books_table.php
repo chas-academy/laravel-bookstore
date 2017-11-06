@@ -17,7 +17,8 @@ class CreateBooksTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('author');
-            $table->integer('stock');
+            $table->integer('isbn');
+            $table->integer('stock')->default(0);
             $table->integer('price');
             $table->timestamps();
         });

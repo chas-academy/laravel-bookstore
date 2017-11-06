@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Book;
+
 class BookController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +16,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::all()->toArray();
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -34,7 +38,16 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $book = $this->validate(request(), [
+            'title' => 'required',
+            'author' => 'required',
+            'isbn' => 'required|numeric',
+            'price' => 'required|numeric',
+          ]);
+
+          Book::create($book);
+
+          return back()->with('success', 'Book has been added');;
     }
 
     /**
