@@ -9,9 +9,39 @@
 
 This is a super basic introduction to working with Laravel and migrations using a Bookstore as a domain.
 
-### Requirements
-- Homestead configuration or similar that maps to the code in this folder
-- Run `vagrant ssh` in homestead, and then `php artisan migrate` inside the Homestead VM to run the migrations, which will generate the needed tables
+### QUICKSTART
+
+* From the root of the project run `composer install`
+* Rename the `.env.example` file to `.env`, edit it with the following information:
+
+```
+APP_NAME=yourappnamehere
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_LOG_LEVEL=debug
+APP_URL=http://localhost
+```
+
+* After having done the steps above run the following command, from the root of the         project:
+
+```
+php artisan key:generate
+```
+
+If that is successfull you should get something like this message in your shell:
+
+    Application key [randomlettersandnumershere] set successfully.
+
+* Make sure your Homestead virtual machine is running and then navigate to your project in your browser of choice. If you've followed my setup the
+  application should be available at http://bookstore.dev
+
+* Now, run `vagrant ssh` in homestead your homestead directory (`~/Homestead`)
+* Change directory to: `cd /home/vagrant/code/laravel-bookstore`, then run `php artisan migrate` to run the migrations, which will generate the needed tables for the application. If that is successful you can exit the VM with the command `exit`. This should bring you back to the `~/Homestead` directory).
+
+Now you're ready to develop!
+
+---
 
 ## Learning Laravel
 
