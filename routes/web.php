@@ -17,4 +17,8 @@ Route::get('/', function () {
 
 Route::resource('books','BookController');
 
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('cart', 'CartController');
+});
+
 Auth::routes();
