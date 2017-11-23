@@ -3,20 +3,6 @@
 @section('content')
     <div class="container">
       <h2>Create A Book</h2>
-      @if ($errors->any())
-      <div class="alert alert-danger">
-          <ul>
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-              @endforeach
-          </ul>
-      </div>
-      @endif
-      @if (\Session::has('success'))
-        <div class="alert alert-success">
-            <p>{{ \Session::get('success') }}</p>
-        </div>
-      @endif
       <form method="post" action="{{url('books')}}">
         {{csrf_field()}}
           <div class="row">

@@ -16,19 +16,31 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // increment the quantity
+        if ($request->get('product_id') && ($request->get('increment')) == 1) {
+            $cart = Cart::find($request->get('product_id'));
+            $cart->amount += 1;
+            $cart->save();
+        }
+
+        // decrease the quantity
+        if ($request->get('product_id') && ($request->get('decrement')) == 1) {
+            $cart = Cart::find($request->get('product_id'));
+            
+            if ($cart->amount == 1) {
+                $cart->delete();
+            } else {
+                $cart->amount -= 1;
+                $cart->save();
+            }
+        }
+
         $user_id = Auth::user()->id;
 
         $cart_books = Cart::with('book')->where('user_id', '=', $user_id)->get();
         $cart_total = Cart::with('book')->where('user_id', '=', $user_id)->sum('total');
-
-        if(!$cart_books)
-        {
-            return 
-                redirect('/')
-                    ->with('error', 'Cart is empty');
-        }
 
         return view('cart', compact('cart_books', 'cart_total'));
     }
@@ -120,7 +132,6 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-
     }
 
     /**

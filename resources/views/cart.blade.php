@@ -4,25 +4,44 @@
     <div class="container">
         <table class="table table-striped">
             <thead>
-                <tr>
+                <tr class="row">
                     <th>Title</th>
                     <th>Author</th>
                     <th>Amount</th>
                     <th>Price</th>
-                    <th>Remove</th>
+                    <th>Total price</th>
                 </tr>
             </thead>
             <tbody>
+            @if (count($cart_books) == 0)
+                <tr class="row">
+                    <td colspan="5">Nothing here yet, get to shopping!</td>
+                </tr>
+            @endif
             @foreach ($cart_books as $cart_item)
-                <tr>
+                <tr class="row">
                     <td>{{$cart_item->book->title}}</td>
                     <td>{{$cart_item->book->author->firstname}} {{$cart_item->book->author->surname}}</td>
-                    <td>
-                        <input type="text" name="amount" class="form-control" value="{{$cart_item->amount}}" />
+                    <td class="col-md-2">
+                        <input type="hidden" name="_method" value="PUT" />
+                        <div class="input-group br"> 
+                            <span class="input-group-btn">
+                                <a href='{{url("cart?product_id=$cart_item->id&decrement=1")}}' class="btn btn-sm btn-primary">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </a>
+                            </span>
+                            <input class="form-control input-sm text-center" type="number" name="amount" value="{{$cart_item->amount}}" disabled />
+                            <span class="input-group-btn">
+                                <a href='{{url("cart?product_id=$cart_item->id&increment=1")}}' class="btn btn-sm btn-primary">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                            </span>
+                        </div>
                     </td>
                     <td>{{$cart_item->book->price}}</td>
-                    <td>
-                        <form action="{{action('CartController@destroy', $cart_item->id)}}" method="post">
+                    <td>{{$cart_item->book->price * $cart_item->amount}}</td>
+                    <td class="col-md-4">
+                        <form class="col-md-3" action="{{action('CartController@destroy', $cart_item->id)}}" method="post">
                             {{csrf_field()}}
                             <input type="hidden" name="_method" value="DELETE" />
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -32,10 +51,10 @@
             @endforeach
             </tbody>
             <tfoot>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                    <td>Total</td>
-                    <td>{{$cart_total}}</td>
+                <tr class="row">
+                    <th colspan="3">&nbsp;</th>
+                    <th>Total</th>
+                    <th>$ {{$cart_total}}</th>
                 </tr>
             </tfoot>
         </table>

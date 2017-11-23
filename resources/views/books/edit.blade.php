@@ -8,15 +8,6 @@
   <body>
     <div class="container">
       <h2>Edit A Book</h2>
-      @if ($errors->any())
-      <div class="alert alert-danger">
-          <ul>
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-              @endforeach
-          </ul>
-      </div>
-      @endif
       <form method="post" action="{{action('BookController@update', $id)}}">
         {{csrf_field()}}
         <input name="_method" type="hidden" value="PATCH">

@@ -17,7 +17,7 @@ class CreateCartsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('book_id');
-            $table->integer('amount');
+            $table->integer('amount')->unsigned();
             $table->decimal('total', 10, 2);
             $table->timestamps();
         });
